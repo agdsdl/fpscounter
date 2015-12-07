@@ -1,3 +1,41 @@
+#include <dlfcn.h>
+
+__attribute__((constructor))
+int EntryPoint() {
+	NSLog(@"I'm fuking loaded!");
+
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+    NSDictionary *settingDic = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.dongle.fpscounter.plist"];
+
+    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *formatedIdentifier = [NSString stringWithFormat:@"fpscounterEnabled-%@", identifier];
+
+    if ([[settingDic objectForKey:formatedIdentifier] boolValue]) {
+        NSString *libPath = @"/Library/RHRevealLoader/libReveal.dylib";
+        if ([[NSFileManager defaultManager] fileExistsAtPath:libPath]) {
+            dlopen([libPath UTF8String], 2);
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:nil];
+            NSLog(@"fpscounter loaded %@", libPath);
+        }
+				else{
+					NSLog(@"file not exist at %@", libPath);
+				}
+    }
+		else {
+			NSLog(@"fpscounter setting off");
+		}
+
+    [pool drain];
+
+	return 1;
+}
+
+__attribute__((destructor))
+void deEntry(){
+	NSLog(@"I'm fuking leaving!");
+}
+
 /* How to Hook with Logos
 Hooks are written with syntax similar to that of an Objective-C @implementation.
 You don't need to #include <substrate.h>, it will be done automatically, as will

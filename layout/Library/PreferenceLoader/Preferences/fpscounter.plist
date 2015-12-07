@@ -1,0 +1,48 @@
+{
+	entry = {
+		cell = PSLinkCell;
+		label = FPSCounter;
+		icon = "fpscounter.png";
+		items = (
+			{
+				bundle = AppList;
+				isController = 1;
+				cell = PSLinkCell;
+				label = "Enabled Applications";
+				ALSettingsPath = "/var/mobile/Library/Preferences/com.dongle.fpscounter.plist";
+				ALSettingsKeyPrefix = "fpscounterEnabled-";
+				"ALSettingsDefaultValue" = "";
+				"New item" = "";
+				ALAllowsSelection = 1;
+				ALSectionDescriptors = (
+					{
+						items = ();
+						"footer-title" = "Select which applications to show FPS info.";
+					},
+					{
+						title = "User Applications";
+						predicate = "isSystemApplication = FALSE";
+						"icon-size" = 29;
+						"suppress-hidden-apps" = 1;
+						"cell-class-name" = ALSwitchCell;
+					},
+					{
+						title = "System Applications";
+						predicate = "isSystemApplication = TRUE AND NOT (displayIdentifier IN {'com.iptm.bigboss.sbsettings', 'com.booleanmagic.overboard', 'eu.heinelt.ifile'})";
+						"icon-size" = 29;
+						"suppress-hidden-apps" = 1;
+						"cell-class-name" = ALSwitchCell;
+					},
+				);
+			},
+			{
+				cell = PSGroupCell;
+				footerText = "Used for application performance measurement.";
+			},
+			{
+				cell = PSGroupCell;
+				footerText = "\nDongle Su\n\nCopyright (c) 2014 Dongle Su. All rights reserved.\n \n";
+			},
+		);
+	};
+}

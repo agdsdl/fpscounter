@@ -1,9 +1,9 @@
 Package: com.dongle.fpscounter
 Name: FPSCounter
-Depends: mobilesubstrate
+Depends: mobilesubstrate, applist (>= 1.5.9)
 Version: 0.0.1
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
-Maintainer: 苏东乐
-Author: 苏东乐
+Description: Used to measure application perfermence!
+Maintainer: Dongle Su
+Author: Dongle Su(agdsdle@gmail.com)
 Section: Tweaks

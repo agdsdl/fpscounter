@@ -1,6 +1,7 @@
 #include <dlfcn.h>
+#import "KMCGeigerCounter.h"
 
-__attribute__((constructor))
+//__attribute__((constructor))
 int EntryPoint() {
 	NSLog(@"I'm fuking loaded!");
 
@@ -12,15 +13,16 @@ int EntryPoint() {
     NSString *formatedIdentifier = [NSString stringWithFormat:@"fpscounterEnabled-%@", identifier];
 
     if ([[settingDic objectForKey:formatedIdentifier] boolValue]) {
-        NSString *libPath = @"/Library/RHRevealLoader/libReveal.dylib";
-        if ([[NSFileManager defaultManager] fileExistsAtPath:libPath]) {
-            dlopen([libPath UTF8String], 2);
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:nil];
-            NSLog(@"fpscounter loaded %@", libPath);
-        }
-				else{
-					NSLog(@"file not exist at %@", libPath);
-				}
+			[KMCGeigerCounter sharedGeigerCounter].enabled = YES;
+        // NSString *libPath = @"/usr/lib/testlib.dylib";
+        // if ([[NSFileManager defaultManager] fileExistsAtPath:libPath]) {
+        //     dlopen([libPath UTF8String], 2);
+        //     [[NSNotificationCenter defaultCenter] postNotificationName:@"IBARevealRequestStart" object:nil];
+        //     NSLog(@"fpscounter loaded %@", libPath);
+        // }
+				// else{
+				// 	NSLog(@"file not exist at %@", libPath);
+				// }
     }
 		else {
 			NSLog(@"fpscounter setting off");
@@ -35,6 +37,14 @@ __attribute__((destructor))
 void deEntry(){
 	NSLog(@"I'm fuking leaving!");
 }
+
+%hook UIWindow
+- (void)makeKeyAndVisible{
+	%log;
+	%orig;
+	EntryPoint();
+}
+%end
 
 /* How to Hook with Logos
 Hooks are written with syntax similar to that of an Objective-C @implementation.

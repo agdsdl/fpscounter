@@ -7,8 +7,6 @@
 //
 
 #import "KMCGeigerCounter.h"
-#import <QuartzCore/QuartzCore.h>
-#import <AudioToolbox/AudioToolbox.h>
 #import <SpriteKit/SpriteKit.h>
 
 // I'd prefer "static NSInteger const kHardwareFramesPerSecond = 60;", but
@@ -33,7 +31,6 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
 @property (nonatomic, retain) SKView *sceneView;
 
 @property (nonatomic, retain) CADisplayLink *displayLink;
-//@property (nonatomic, assign) SystemSoundID tickSoundID;
 
 @property (nonatomic, assign) NSInteger frameNumber;
 
@@ -67,29 +64,6 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
 {
     NSInteger drawnFrameCount = self.drawnFrameCountInLastSecond;
 
-//    NSString *droppedString;
-//    NSString *drawnString;
-//
-//    if (droppedFrameCount <= 0) {
-//        self.meterLabel.backgroundColor = self.meterPerfectColor;
-//
-//        droppedString = @"--";
-//    } else {
-//        if (droppedFrameCount <= 2) {
-//            self.meterLabel.backgroundColor = self.meterGoodColor;
-//        } else {
-//            self.meterLabel.backgroundColor = self.meterBadColor;
-//        }
-//
-//        droppedString = [NSString stringWithFormat:@"%ld", (long) droppedFrameCount];
-//    }
-//
-//    if (drawnFrameCount == -1) {
-//        drawnString = @"--";
-//    } else {
-//        drawnString = [NSString stringWithFormat:@"%ld", (long) drawnFrameCount];
-//    }
-
     if (drawnFrameCount < 0) {
         self.meterLabel.backgroundColor = [UIColor grayColor];
     }
@@ -109,12 +83,6 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
 {
     CFTimeInterval currentFrameTime = displayLink.timestamp;
 
-    // Frames should be even multiples of kNormalFrameDuration.
-    // If a frame takes two frame durations, we dropped at least one, so click.
-//    if (1.5 < frameDuration / kNormalFrameDuration) {
-//        AudioServicesPlaySystemSound(self.tickSoundID);
-//    }
-
     [self recordFrameTime:currentFrameTime];
 
     [self updateMeterLabel];
@@ -124,11 +92,6 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
 
 - (void)start
 {
-//    NSURL *tickSoundURL = [[NSBundle bundleForClass:KMCGeigerCounter.class] URLForResource:@"KMCGeigerCounterTick" withExtension:@"aiff"];
-//    SystemSoundID tickSoundID;
-//    AudioServicesCreateSystemSoundID((__bridge CFURLRef) tickSoundURL, &tickSoundID);
-//    self.tickSoundID = tickSoundID;
-
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkWillDraw:)];
     [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     [self clearLastSecondOfFrameTimes];
@@ -152,9 +115,6 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
 
     [self.displayLink invalidate];
     self.displayLink = nil;
-
-//    AudioServicesDisposeSystemSoundID(self.tickSoundID);
-//    self.tickSoundID = 0;
 }
 
 - (void)setRunning:(BOOL)running
@@ -214,7 +174,7 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
-
+    
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         self.running = YES;
     }
@@ -223,7 +183,7 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
 - (void)disable
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
+    
     self.running = NO;
 
     self.meterLabel = nil;
@@ -256,12 +216,9 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
     self.meterPerfectColor = nil;
     self.meterLabel = nil;
     self.window = nil;
-//    if (_tickSoundID) {
-//        AudioServicesDisposeSystemSoundID(_tickSoundID);
-//    }
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
+    
     [super dealloc];
 }
 

@@ -146,7 +146,7 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
 
 - (void)enable
 {
-    self.window = [[[UIWindow alloc] initWithFrame:CGRectMake(100, 0, 60, 20)] autorelease];
+    self.window = [[[UIWindow alloc] initWithFrame:[UIApplication sharedApplication].statusBarFrame] autorelease];
     self.window.windowLevel = UIWindowLevelStatusBar + 100.0;
     self.window.userInteractionEnabled = NO;
 
@@ -174,7 +174,7 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
-    
+
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         self.running = YES;
     }
@@ -183,7 +183,7 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
 - (void)disable
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+
     self.running = NO;
 
     self.meterLabel = nil;
@@ -218,7 +218,7 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
     self.window = nil;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
+
     [super dealloc];
 }
 

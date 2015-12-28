@@ -41,7 +41,7 @@
 			},
 			{
 				cell = PSGroupCell;
-				footerText = "Copyright (c) 2015 Dongle Su. All rights reserved.\n \n";
+				footerText = "Copyright (c) 2015 agdsdl. All rights reserved.\n \n";
 			},
 			{
 				cell = PSLinkCell;

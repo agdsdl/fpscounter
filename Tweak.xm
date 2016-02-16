@@ -3,8 +3,6 @@
 
 //__attribute__((constructor))
 int EntryPoint() {
-	NSLog(@"I'm fuking loaded!");
-
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
     NSDictionary *settingDic = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.dongle.fpscounter.plist"];
@@ -25,7 +23,7 @@ int EntryPoint() {
 				// }
     }
 		else {
-			NSLog(@"fpscounter setting off");
+			//NSLog(@"fpscounter setting off");
 		}
 
     [pool drain];
@@ -35,7 +33,6 @@ int EntryPoint() {
 
 __attribute__((destructor))
 void deEntry(){
-	NSLog(@"I'm fuking leaving!");
 }
 
 %hook UIWindow

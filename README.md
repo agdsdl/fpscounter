@@ -3,11 +3,26 @@
 
 fpscounter is a FPS counter tool run on jailbreaken iOS devices, with witch you can see app's FPS. It can integrate into almost every iOS app.
 
-![preview1](https://github.com/agdsdl/fpscounter/blob/master/images/preview1.PNG?raw=true)
-![preview2](https://github.com/agdsdl/fpscounter/blob/master/images/preview2.PNG?raw=true)
-![preview3](https://github.com/agdsdl/fpscounter/blob/master/images/preview3.PNG?raw=true)
 
-##install
-Install on Cydia
+![preview1](https://github.com/agdsdl/fpscounter/blob/master/images/preview1.jpg?raw=true)
+![preview2](https://github.com/agdsdl/fpscounter/blob/master/images/preview2.jpg?raw=true)
+![preview3](https://github.com/agdsdl/fpscounter/blob/master/images/preview3.jpg?raw=true)
 
-##useage
+##Install
+###Install on Cydia
+- Make sure your have BigBoss repo source in cydia.
+- In `search` tab, search for `FPSCounter`.
+
+###Compile and install
+- Make sure you have `Theos` installed. See [here](http://blog.zhidong.info/blog/2016/02/04/write-a-tweak/).
+- Enter the following command in shell.
+```bash
+export THEOS_DEVICE_IP=你手机的ip地址
+make package insall
+```
+
+##Useage
+- Config it in settings app.
+
+##Licence
+MIT

@@ -17,7 +17,7 @@ fpscounter is a FPS counter tool run on jailbreaken iOS devices, with witch you 
 - Make sure you have `Theos` installed. See [here](http://blog.zhidong.info/blog/2016/02/04/write-a-tweak/).
 - Enter the following command in shell.
 ```bash
-export THEOS_DEVICE_IP=你手机的ip地址
+export THEOS_DEVICE_IP=IP address of your iPhone
 make package insall
 ```
 

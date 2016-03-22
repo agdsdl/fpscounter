@@ -149,6 +149,10 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
     self.window = [[[UIWindow alloc] initWithFrame:[UIApplication sharedApplication].statusBarFrame] autorelease];
     self.window.windowLevel = UIWindowLevelStatusBar + 100.0;
     self.window.userInteractionEnabled = NO;
+    
+    UIViewController *rootViewController = [[[UIViewController alloc] init] autorelease];
+    rootViewController.view.frame = self.window.bounds;
+    self.window.rootViewController = rootViewController;
 
     CGFloat const kMeterWidth = 65.0;
     CGFloat xOrigin = 0.0;
@@ -169,7 +173,7 @@ static NSTimeInterval const kNormalFrameDuration = 1.0 / kHardwareFramesPerSecon
     self.meterLabel.backgroundColor = [UIColor grayColor];
     self.meterLabel.textColor = [UIColor whiteColor];
     self.meterLabel.textAlignment = NSTextAlignmentCenter;
-    [self.window addSubview:self.meterLabel];
+    [self.window.rootViewController.view addSubview:self.meterLabel];
     self.window.hidden = NO;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
